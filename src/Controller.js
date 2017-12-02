@@ -6,6 +6,9 @@ class Controller {
         for (let key in options) {
             this[key] = options[key] // 把用户传的东西都放到 json
         }
+
+        this.init && this.init()
+
         this.$element = $(this.element)
         if (this.template && this.render) {
             this.render()
