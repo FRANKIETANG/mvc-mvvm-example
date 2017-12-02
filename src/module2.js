@@ -1,11 +1,13 @@
-import $ from 'jquery'
+import Controller from './Controller'
 
-/*module2*/
-let $module2 = $('.module2')
-
-$module2.on('change', 'input', ()=>{
-    console.log('change2')
-})
-$module2.on('click', 'button', ()=>{
-    console.log('click2')
+new Controller({
+    element: '.module2',
+    events: {
+        'change input': e => {
+            console.log('change2')
+        },
+        'click button': e => {
+            console.log('click2')
+        }
+    }
 })
