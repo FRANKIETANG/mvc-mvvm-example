@@ -3,25 +3,25 @@ import $ from 'jquery'
 
 new Controller({
     element: '.module2',
+    template: `
+        <input type="text" name="number2" value="{{output}}">
+        <button name="button2">点我</button>  
+        <div class="output">{{output}}</div>  
+    `,
+    data: {
+        output: ''
+    },
     events: {
         'change input': 'onChangeInput',
         'click button': 'onClickButton'
     },
     onClickButton(e) {
         let value = this.$element.find('input').val()
-        this.render(value)
+        this.data.output = value
+        this.render()
     },
     onChangeInput(e) {
         let input = e.currentTarget
         console.log(input.value)
-    },
-    render(value) {
-        let $output = this.$element.find('.output')
-        if ($output.length === 0) {
-            $output = $('<div class="output"></div>').text(value)
-            $output.appendTo(this.$element)
-        } else {
-            $output.text(value)
-        }
     }
 })
