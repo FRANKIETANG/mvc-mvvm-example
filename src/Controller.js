@@ -36,7 +36,8 @@ class Controller {
         }
     }
     render() {
-        let html = Handlebars.compile(this.template)(this.data)
+        let template = (this.template[0] === '#') ? $(this.template).html() : this.template
+        let html = Handlebars.compile(template)(this.data)
         // let html = this.template.replace(/\{\{\s*(\S+)\s*\}\}/g, (match, c1) => {
         //     return this.data[c1]
         // })
