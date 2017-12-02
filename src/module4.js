@@ -1,6 +1,37 @@
 import Controller from './Controller'
 import $ from 'jquery'
 
+let model = {
+    data: {
+        number: 0
+    },
+    get() {
+        return $.get('/data.json').then((response) => {
+            this.data = response
+            return this.data
+        })
+    },
+    increase() {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                console.log('500ms')
+                this.data.number += 1
+                resolve(this.data)
+            }, 500)
+        })
+    },
+    decrease() {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                console.log('500ms')
+                this.data.number -= 1
+                resolve(this.data)
+            }, 500)
+        })
+    }
+}
+
+
 new Controller({
     element: '.module4',
     template: `
@@ -8,49 +39,24 @@ new Controller({
         <span>{{number}}</span>
         <button name="increase"> + </button>
     `,
-    data: {
-        number: 0
-    },
-    init() {
-        $.get('/data.json').then((response) => {
-            this.data = response
-            this.render()
-        })
-    },
+    model: model,
     events: {
         'click button[name=increase]': 'increase',
         'click button[name=decrease]': 'decrease'
     },
+    init() {
+        this.model.get().then(() => {
+            this.render()
+        })
+    },
     increase() {
-        this.remoteIncrease().then(() => {
-            this.data.number += 1
+        this.model.increase().then(() => {
             this.render()
         })
     },
     decrease() {
-        this.remoteDecrease().then(() => {
-            this.data.number -= 1
+        this.model.decrease().then(() => {
             this.render()
-        })
-    },
-    remoteIncrease() {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                console.log('500ms')
-                resolve({
-                    number: this.number + 1
-                })
-            }, 500)
-        })
-    },
-    remoteDecrease() {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                console.log('500ms')
-                resolve({
-                    number: this.number - 1
-                })
-            }, 500)
         })
     }
 })
