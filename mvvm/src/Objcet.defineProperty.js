@@ -9,19 +9,19 @@ let frankie = {
 }
 
 /*这下面都是 VM */
-for (let key in frankie._data){
-Object.defineProperty(frankie, key, {
-    get: () => {
-        console.log(`frankie.${key} 被读取了`)
-        return frankie._data[key]
-    },
-    set: xxx => {
-        console.log(`frankie.${key} 被设置了`)
-        $(`input[name="${key}"]`).val(xxx)  // 设置对象就改 input
-        frankie._data[key] = xxx
-        // console.log(frankie)
-    }
-})    
+for (let key in frankie._data) {
+    Object.defineProperty(frankie, key, {
+        get: () => {
+            console.log(`frankie.${key} 被读取了`)
+            return frankie._data[key]
+        },
+        set: xxx => {
+            console.log(`frankie.${key} 被设置了`)
+            $(`input[name="${key}"]`).val(xxx)  // 设置对象就改 input
+            frankie._data[key] = xxx
+            // console.log(frankie)
+        }
+    })
 }
 
 $('form').on('input', 'input[name]', e => {
